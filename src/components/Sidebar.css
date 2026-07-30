@@ -1,0 +1,294 @@
+/* ========================================================================= */
+/* SIDEBAR CONTAINER & DESKTOP COLLAPSED STATES                             */
+/* ========================================================================= */
+.sidebar-container {
+  width: 260px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 14px; /* Tăng padding dọc lên 16px giúp card ráo dáng */
+  flex-shrink: 0;
+  background: rgba(12, 18, 24, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+  position: relative;
+  z-index: 10;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+}
+
+/* KHI THU GỌN SIDEBAR VỀ DẠNG MINI (80PX CHUẨN RỘNG, KHÔNG BỊ NGỢP) */
+.sidebar-container.collapsed {
+  width: 80px;
+  padding: 16px 12px;
+}
+
+/* BRAND HEADER & TOGGLE BUTTON LAYOUT (FLEX GỐC HÀNG NGANG) */
+.sidebar-brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 0 4px;
+  min-height: 40px;
+  position: relative;
+}
+
+/* KHI THU GỌN: CHUYỂN HEADER SANG HÀNG DỌC (TOGGLE TRÊN, LOGO DƯỚI) - KHÔNG ĐÈ */
+.sidebar-container.collapsed .sidebar-brand-header {
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-height: auto;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.brand-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 0px 8px rgba(0, 242, 255, 0.4));
+  transition: transform 0.3s ease;
+}
+
+.sidebar-container.collapsed .brand-logo-img {
+  width: 32px;
+  height: 32px;
+}
+
+.sidebar-brand:hover .brand-logo-img {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.brand-title {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #FFFFFF 0%, #00F2FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+}
+
+/* TOGGLE BUTTON DESKTOP (HIỆU ỨNG CÔNG NGHỆ CYBER GLOW) */
+.btn-toggle-sidebar {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #8E9BAE !important;
+  border-radius: 10px !important;
+  width: 36px;
+  height: 36px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: all 0.25s ease !important;
+  flex-shrink: 0;
+}
+
+.btn-toggle-sidebar:hover {
+  background: rgba(0, 242, 255, 0.12) !important;
+  color: #00F2FF !important;
+  border-color: rgba(0, 242, 255, 0.4) !important;
+  box-shadow: 0 0 16px rgba(0, 242, 255, 0.25);
+}
+
+/* NAVIGATION LIST */
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #8E9BAE;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-container.collapsed .nav-item-btn {
+  justify-content: center;
+  padding: 10px 0;
+  border-radius: 12px;
+}
+
+.nav-item-btn:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-container:not(.collapsed) .nav-item-btn:hover {
+  padding-left: 16px;
+}
+
+.nav-item-btn.active {
+  color: #00F2FF;
+  background: rgba(0, 242, 255, 0.08);
+  border-color: rgba(0, 242, 255, 0.25);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.08) inset;
+}
+
+.nav-item-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 3px;
+  background: #00F2FF;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 8px #00F2FF;
+}
+
+.nav-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.nav-item-btn:hover .nav-item-icon {
+  transform: scale(1.12);
+}
+
+.nav-item-text {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.nav-item-btn.active .nav-item-text {
+  font-weight: 600;
+}
+
+/* USER PROFILE CARD (CA RÁO THANH THOÁT CYBER) */
+.user-profile-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 242, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.sidebar-container.collapsed .user-profile-card {
+  justify-content: center;
+  padding: 8px;
+}
+
+.user-profile-card:hover {
+  border-color: rgba(0, 242, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 242, 255, 0.3);
+}
+
+.user-info {
+  min-width: 0;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-plan {
+  font-size: 11px;
+  color: #00F2FF;
+  font-weight: 500;
+}
+
+/* ========================================================================= */
+/* MOBILE TOPBAR & DRAWER OVERLAY RESPONSIVE                                 */
+/* ========================================================================= */
+.mobile-topbar {
+  display: none;
+  height: 60px;
+  width: 100%;
+  background: rgba(12, 18, 24, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 120;
+}
+
+@media (max-width: 768px) {
+  .mobile-topbar {
+    display: flex;
+  }
+
+  .desktop-sidebar {
+    display: none;
+  }
+
+  .sidebar-container.mobile-drawer {
+    display: flex;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 130;
+    width: 260px !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+  }
+}

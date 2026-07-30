@@ -1,0 +1,493 @@
+/* ========================================================================= */
+/* MAIN CONTAINER & SCROLLABLE WORKSPACE                                     */
+/* ========================================================================= */
+.meeting-page-container {
+  width: 100%;
+  height: 100vh;
+  background: #070A0D;
+  color: #E2E8F0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* WATERMARK LOGO CỐ ĐỊNH CHÍNH GIỮA KHU VỰC MEETINGGUIDEPAGE */
+.watermark-bg-logo {
+  position: fixed;
+  top: 50%;
+  left: calc(260px + (100vw - 260px) / 2);
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  object-fit: contain;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 0 35px rgba(0, 242, 255, 0.25));
+  user-select: none;
+}
+
+/* Custom Scrollbar Mờ Dịu */
+.meeting-page-container::-webkit-scrollbar {
+  width: 6px;
+}
+.meeting-page-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.meeting-page-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.meeting-page-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 242, 255, 0.3);
+}
+
+/* INNER CONTENT WRAPPER */
+.meeting-content-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  position: relative;
+  z-index: 2;
+}
+
+/* HERO SECTION */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  background: rgba(244, 125, 32, 0.1);
+  border: 1px solid rgba(244, 125, 32, 0.3);
+  color: #F47D20;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.version-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #F47D20;
+  box-shadow: 0 0 8px #F47D20;
+}
+
+.hero-title {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.hero-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #94A3B8;
+  max-width: 680px;
+  margin-bottom: 32px;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-cyan-start {
+  background: #00F2FF !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  padding: 12px 28px !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.35) !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-cyan-start:hover {
+  background: #33F5FF !important;
+  box-shadow: 0 0 28px rgba(0, 242, 255, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+.btn-ghost-demo {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 12px 28px !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-ghost-demo:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* WORKFLOW CARDS SECTION */
+.workflow-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-heading-cyan {
+  font-size: 22px;
+  font-weight: 800;
+  color: #FFFFFF;
+  position: relative;
+  display: inline-block;
+}
+
+.section-heading-cyan::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #00F2FF;
+  border-radius: 2px;
+  margin-top: 6px;
+  box-shadow: 0 0 8px #00F2FF;
+}
+
+/* WORKFLOW GRID TỰ ĐỘNG THAY ĐỔI CỘT RESPONSIVE */
+.workflow-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.workflow-card {
+  background: rgba(18, 25, 33, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.workflow-card:hover {
+  border-color: rgba(0, 242, 255, 0.35);
+  background: rgba(18, 25, 33, 0.85);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.card-icon-wrapper.cyan {
+  background: rgba(0, 242, 255, 0.1);
+  color: #00F2FF;
+  border: 1px solid rgba(0, 242, 255, 0.25);
+}
+
+.card-icon-wrapper.orange {
+  background: rgba(244, 125, 32, 0.1);
+  color: #F47D20;
+  border: 1px solid rgba(244, 125, 32, 0.25);
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #94A3B8;
+}
+
+.card-step-number {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  letter-spacing: 1px;
+  margin-top: 24px;
+}
+
+/* DOWNLOAD CLIENT BANNER */
+.download-banner-card {
+  background: linear-gradient(135deg, rgba(18, 25, 33, 0.85) 0%, rgba(12, 18, 24, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.download-banner-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.banner-left-info {
+  flex: 1;
+  max-width: 540px;
+}
+
+.banner-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.banner-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #94A3B8;
+  margin-bottom: 24px;
+}
+
+.banner-stats-row {
+  display: flex;
+  gap: 36px;
+}
+
+.stat-item-number {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.stat-item-label {
+  font-size: 11px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.banner-right-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.btn-apk-download {
+  background: linear-gradient(135deg, #F47D20 0%, #FF9A42 100%) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  padding: 14px 28px !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  box-shadow: 0 8px 24px rgba(244, 125, 32, 0.35) !important;
+  transition: all 0.25s ease !important;
+  white-space: nowrap;
+}
+
+.btn-apk-download:hover {
+  box-shadow: 0 12px 32px rgba(244, 125, 32, 0.55) !important;
+  transform: translateY(-2px);
+}
+
+.file-meta-info {
+  font-size: 11px;
+  color: #64748B;
+}
+
+/* FOOTER */
+.meeting-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-brand-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.footer-copyright {
+  font-size: 11px;
+  color: #475569;
+}
+
+.footer-links-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  font-size: 12px;
+  color: #64748B;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #00F2FF;
+}
+
+.btn-icon-footer {
+  color: #64748B !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-icon-footer:hover {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ========================================================================= */
+/* RESPONSIVE MEDIA QUERIES (TABLET & MOBILE FIX)                            */
+/* ========================================================================= */
+
+/* TABLET (< 900PX) */
+@media (max-width: 900px) {
+  .watermark-bg-logo {
+    left: 50%; /* Căn giữa viewport khi không có Sidebar cố định */
+    width: 380px;
+    height: 380px;
+  }
+
+  .meeting-content-wrapper {
+    padding: 24px 20px 60px;
+    gap: 40px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .workflow-cards-grid {
+    grid-template-columns: repeat(2, 1fr); /* Chuyển thành 2 cột trên Tablet */
+    gap: 16px;
+  }
+
+  .download-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 24px;
+    gap: 24px;
+  }
+
+  .banner-right-action {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .btn-apk-download {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* MOBILE NHỎ (< 600PX - XỬ LÝ LỖI TRÀN 3 CỘT TRÊN IPHONE) */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-cyan-start,
+  .btn-ghost-demo {
+    width: 100% !important;
+  }
+
+  /* CHUYỂN HOÀN TOÀN 3 CẠRD QUY TRÌNH THÀNH 1 CỘT DỌC CHUẨN XEM TRÊN ĐIỆN THOẠI */
+  .workflow-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .workflow-card {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .meeting-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-links-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
