@@ -1,0 +1,955 @@
+/* ========================================================================= */
+/* CONTAINER CHÍNH CHUẨN DARK CYBER (#06A8D9 & #F57F1F ACCENT)               */
+/* ========================================================================= */
+.community-page-container {
+  width: 100%;
+  height: 100vh;
+  background: #070A0D;
+  color: #E2E8F0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Cyber */
+.community-page-container::-webkit-scrollbar {
+  width: 5px;
+}
+.community-page-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.community-page-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.community-page-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 168, 217, 0.4);
+}
+
+/* WATERMARK LOGO CHÌM OPACITY 0.1 CỐ ĐỊNH CHÍNH GIỮA WORKSPACE PC & MOBILE */
+.community-watermark-bg {
+  position: fixed;
+  top: 50%;
+  left: calc(260px + (100vw - 260px) / 2);
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  object-fit: contain;
+  opacity: 0.1 !important;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 0 35px rgba(6, 168, 217, 0.35));
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.community-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ========================================================================= */
+/* STICKY GLASSMORPHISM HEADER (CỐ ĐỊNH TỪ TITLE TỚI FILTER TABS)            */
+/* ========================================================================= */
+.community-sticky-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(12, 18, 24, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding-top: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 242, 255, 0.12);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65);
+}
+
+.header-inner-flex {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.community-header-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+/* PHỐI MÀU LOGO "ONE TO NINE" GRADIENT CYAN-ORANGE CHUẨN IDENTITY */
+.brand-gradient-text {
+  font-style: italic;
+  font-weight: 900;
+  background: linear-gradient(135deg, #06A8D9 0%, #25C4F5 45%, #F57F1F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px rgba(6, 168, 217, 0.35));
+}
+
+.community-header-subtitle {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #8E9BAE;
+  margin: 0;
+  max-width: 780px;
+}
+
+/* SCOPE TOGGLE BUTTONS (CỘNG ĐỒNG / NỘI BỘ) */
+.scope-toggle-box {
+  display: inline-flex;
+  background: rgba(18, 25, 33, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 3px;
+  gap: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.scope-btn {
+  background: transparent;
+  border: none;
+  color: #8E9BAE;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.scope-btn.active {
+  background: #06A8D9;
+  color: #FFFFFF;
+  font-weight: 800 !important;
+  box-shadow: 0 0 16px rgba(6, 168, 217, 0.5);
+}
+
+/* FILTER BARS & TABS */
+.community-filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.media-type-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.media-type-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.pill-filter-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8E9BAE;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.pill-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.pill-filter-btn.active {
+  background: rgba(6, 168, 217, 0.15);
+  border-color: #06A8D9;
+  color: #06A8D9;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(6, 168, 217, 0.25);
+}
+
+.sort-select-box {
+  background: rgba(18, 25, 33, 0.8) !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  flex-shrink: 0;
+}
+
+/* ========================================================================= */
+/* COMMUNITY GALLERY GRID                                                    */
+/* ========================================================================= */
+.community-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.community-card {
+  background: rgba(18, 25, 33, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.community-card:hover {
+  border-color: rgba(6, 168, 217, 0.45);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 168, 217, 0.15);
+}
+
+.card-media-wrapper {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  background: #000000;
+  overflow: hidden;
+}
+
+.card-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.community-card:hover .card-media-img {
+  transform: scale(1.05);
+}
+
+/* BADGE FIX CHUẨN ÔM TỰ TỰ KHÔNG DÀI THÒN */
+.badge-file-extension {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  max-width: max-content !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(6, 168, 217, 0.4) !important;
+  color: #06A8D9 !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  z-index: 5 !important;
+  pointer-events: none;
+}
+
+.badge-scope-tag {
+  position: absolute !important;
+  top: 10px !important;
+  left: 58px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  max-width: max-content !important;
+  backdrop-filter: blur(8px) !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  z-index: 5 !important;
+  pointer-events: none;
+}
+
+.badge-scope-tag.public {
+  background: rgba(6, 168, 217, 0.85) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(6, 168, 217, 0.4) !important;
+}
+
+.badge-scope-tag.private {
+  background: rgba(168, 85, 247, 0.85) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(168, 85, 247, 0.4) !important;
+}
+
+.badge-trending-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(245, 127, 31, 0.9);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.6px;
+  box-shadow: 0 0 10px rgba(245, 127, 31, 0.5);
+  z-index: 3;
+}
+
+/* OVERLAY NÚT PLAY CHO VIDEO */
+.video-overlay-layer {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(1.5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.video-play-btn-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #06A8D9;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(6, 168, 217, 0.6);
+}
+
+.card-info-content {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 10px;
+}
+
+.card-asset-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.card-author-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.author-avatar-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #06A8D9;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.author-name-text {
+  font-size: 11px;
+  color: #94A3B8;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.author-date-text {
+  font-size: 10px;
+  color: #64748B;
+  white-space: nowrap;
+}
+
+.card-footer-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-card-like {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: #94A3B8;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.btn-card-like.liked {
+  color: #F57F1F;
+}
+
+.badge-media-type {
+  font-size: 10px;
+  color: #06A8D9;
+  background: rgba(6, 168, 217, 0.1);
+  border: 1px solid rgba(6, 168, 217, 0.25);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* ========================================================================= */
+/* FIX CỐ ĐỊNH PAGINATION BAR - CĂN GIỮA TUYỆT ĐỐI CẢ PC & MOBILE           */
+/* ========================================================================= */
+.sticky-pagination-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12, 18, 24, 0.94);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 40px;
+  padding: 6px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(6, 168, 217, 0.25);
+  z-index: 35;
+  width: auto;
+  max-width: 90vw;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8E9BAE;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.page-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.page-btn.active {
+  background: #06A8D9;
+  color: #FFFFFF;
+  border-color: #06A8D9;
+  box-shadow: 0 0 12px rgba(6, 168, 217, 0.5);
+}
+
+/* EMPTY STATE KHI KHÔNG CÓ DỮ LIỆU NỘI BỘ */
+.empty-state-box {
+  width: 100%;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  background: rgba(18, 25, 33, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  grid-column: span 4;
+}
+
+/* ========================================================================= */
+/* MODAL PREVIEW LIGHTBOX (SỬA TRIỆT ĐỂ LỖI VỠ CHỮ NÚT THẢ TIM)              */
+/* ========================================================================= */
+.community-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 10, 0.92);
+  backdrop-filter: blur(16px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.community-modal-card {
+  width: 100%;
+  max-width: 980px;
+  height: 580px;
+  background: #0C1218;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(6, 168, 217, 0.15);
+  position: relative;
+}
+
+.modal-close-btn-fixed {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn-fixed:hover {
+  background: #EF4444;
+  color: #FFF;
+}
+
+.modal-left-media-wrapper {
+  flex: 1.25;
+  background: #000000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.modal-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-badge-4k {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(6, 168, 217, 0.3);
+  color: #06A8D9;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.btn-full-view-media {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(12, 18, 24, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-right-info-panel {
+  flex: 0.95;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 25, 33, 0.7);
+  backdrop-filter: blur(12px);
+  overflow-y: auto;
+}
+
+.modal-right-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-right: 36px;
+}
+
+.modal-item-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+/* 🟢 FIX CHUẨN NÚT LƯỢT THÍCH BỊ KHUYẾT XUỐNG DÒNG (IMAGE_DBE9E0.PNG) */
+.btn-modal-like-pill {
+  background: rgba(245, 127, 31, 0.12) !important;
+  border: 1px solid rgba(245, 127, 31, 0.4) !important;
+  color: #F57F1F !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  cursor: pointer;
+  width: auto !important;
+  max-width: max-content !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-modal-like-pill.liked {
+  background: #F57F1F !important;
+  color: #FFFFFF !important;
+}
+
+.modal-author-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.modal-prompt-box-container {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 14px;
+}
+
+.prompt-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #06A8D9;
+  letter-spacing: 0.8px;
+}
+
+.prompt-text-content {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #CBD5E1;
+  font-style: italic;
+  margin: 6px 0 0 0;
+}
+
+/* KHUNG ẢNH THAM CHIẾU (IMAGE REF) CHUẨN FIGMA ẢNH 4 */
+.image-ref-card-figma {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-ref-card-figma:hover {
+  border-color: #06A8D9;
+  background: rgba(6, 168, 217, 0.08);
+}
+
+.ref-thumb-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ref-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ref-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ref-filename-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ref-filesize-sub {
+  font-size: 10.5px;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.modal-metadata-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.meta-info-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.meta-info-label {
+  font-size: 9px;
+  color: #64748B;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.meta-info-value {
+  font-size: 11px;
+  color: #FFFFFF;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.modal-actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-remix-orange {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #F57F1F 0%, #FF9A42 100%);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-download-cyan {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(6, 168, 217, 0.12);
+  border: 1px solid rgba(6, 168, 217, 0.35);
+  color: #06A8D9;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* FIX MODAL TÀI LIỆU CHATBOT LỖI NỀN */
+.document-reader-box {
+  background: rgba(12, 18, 24, 0.96);
+  border: 1px solid rgba(6, 168, 217, 0.3);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 620px;
+  width: 100%;
+  color: #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+  position: relative;
+}
+
+.doc-reader-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.doc-content-body {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  max-height: 280px;
+  overflow-y: auto;
+  color: #CBD5E1;
+}
+
+/* ========================================================================= */
+/* RESPONSIVE BREAKPOINTS (TÁCH HÀNG MOBILE VÀ BẢO ĐẢM KHÔNG LỖI VIỀN)       */
+/* ========================================================================= */
+
+@media (max-width: 900px) {
+  .community-watermark-bg {
+    left: 50% !important;
+    width: 380px;
+    height: 380px;
+  }
+
+  .sticky-pagination-bar {
+    left: 50% !important;
+  }
+
+  .community-content-wrapper {
+    padding: 0 16px 100px;
+    gap: 16px;
+  }
+
+  .community-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .community-modal-card {
+    flex-direction: column;
+    height: auto;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+
+  .modal-left-media-wrapper {
+    height: 30vh !important;
+    flex: none;
+  }
+
+  .modal-right-info-panel {
+    padding: 18px;
+  }
+}
+
+/* RESPONSIVE MOBILE (< 768PX) - CHUYỂN CỤM HEADER THÀNH HÀNG DỌC ĐỘC LẬP HOÀN TOÀN */
+@media (max-width: 768px) {
+  .header-inner-flex {
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .header-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .community-header-title {
+    font-size: 18px;
+    white-space: normal;
+  }
+
+  .community-header-subtitle {
+    display: none !important;
+  }
+
+  .scope-toggle-box {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .scope-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+
+  .community-filters-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .media-type-pills {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .sort-select-box {
+    width: 100% !important;
+  }
+
+  .community-gallery-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sticky-pagination-bar {
+    left: 50% !important;
+    transform: translateX(-50%);
+    width: 88vw;
+    padding: 4px 10px;
+  }
+}

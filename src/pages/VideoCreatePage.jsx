@@ -22,10 +22,14 @@ import {
   DeleteOutlined,
   NotInterestedOutlined,
   DiamondOutlined,
+  DownloadOutlined,
+  ContentCopyOutlined,
+  FullscreenOutlined,
 } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import '../css/VideoCreatePage.css'
+import '../css/CommunityPage.css'
 
 const AI_MODELS = [
   {
@@ -94,33 +98,39 @@ const INITIAL_VIDEOS = [
     id: 'v2',
     title: 'Quận Mưa Neon',
     status: 'completed',
-    quality: '1080P',
-    date: 'Ngày 24 tháng 10 năm 2026',
+    quality: '1080P 60fps',
+    duration: '00:15s',
+    date: '24 Th10, 2026',
     model: 'Cinematix phiên bản 2.3',
     imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
-    prompt: 'Cảnh quay quận phố neon mưa rơi ban đêm, góc máy quay quét mượt mà phong cách điện ảnh.',
+    prompt: 'Cảnh quay quận phố neon mưa rơi ban đêm, góc máy quay quét mượt mà phong cách điện ảnh 60fps.',
+    refFileName: 'cyber_map_ref.json',
+    refSize: '1.1 MB • Config Data',
+    refUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300',
     seed: '88294105',
-    motionScale: '8.5 / 10',
     aspectRatio: '16:9',
   },
   {
     id: 'v3',
-    title: 'Bào tử huyền ảo',
+    title: 'Giai Điệu Điện Tử',
     status: 'completed',
-    quality: '720P',
-    date: 'Ngày 23 tháng 10 năm 2026',
-    model: 'Dreamer-X',
-    imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
-    prompt: 'Bào tử nấm phát sáng trong khu rừng huyền bí, chuyển động chậm 60fps.',
+    quality: '1080P HD',
+    duration: '00:08s',
+    date: '23 Th10, 2026',
+    model: 'Seedance 2.0 Mini',
+    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop',
+    prompt: 'Nghệ sĩ nhạc điện tử trình diễn nhạc cụ dân tộc phát sáng trong không gian Cyberpunk.',
+    refFileName: 'audio_wave.wav',
+    refSize: '2.5 MB • Audio Ref',
+    refUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=300',
     seed: '94201823',
-    motionScale: '9.0 / 10',
     aspectRatio: '16:9',
   },
 ]
 
 export default function VideoCreatePage() {
   const theme = useTheme()
-  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down('md')) // < 900px
+  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [userBalance, setUserBalance] = useState(1250)
   const [selectedModel, setSelectedModel] = useState(AI_MODELS[0])
@@ -143,7 +153,12 @@ export default function VideoCreatePage() {
   const [isModelModalOpen, setIsModelModalOpen] = useState(false)
   const [isStyleModalOpen, setIsStyleModalOpen] = useState(false)
   const [styleActiveTab, setStyleActiveTab] = useState('color')
+  
+  // Modals & Lightbox States
   const [activeVideoDetail, setActiveVideoDetail] = useState(null)
+  const [previewRefImage, setPreviewRefImage] = useState(null)
+  const [isFullViewMedia, setIsFullViewMedia] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false)
 
@@ -193,6 +208,12 @@ export default function VideoCreatePage() {
     setAtmosphere({ label: 'Mặc định', img: '' })
     setLighting({ label: 'Mặc định', img: '' })
     setColorStyle({ label: 'Mặc định', img: '' })
+  }
+
+  const handleCopyPrompt = (text) => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const renderControlSidebarContent = () => (
@@ -329,21 +350,21 @@ export default function VideoCreatePage() {
       <div>
         <div className="control-group-title">KÍCH THƯỚC</div>
         <div className="aspect-ratio-grid">
-          <Tooltip title="Phù hợp Video ngắn/quảng cáo trên Facebook Feed, Instagram Feed." arrow placement="top">
+          <Tooltip title="Phù hợp Video ngắn Feed." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '1:1' ? 'active' : ''}`} onClick={() => setAspectRatio('1:1')}>
               <div className="aspect-box-icon" style={{ width: 16, height: 16 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>1:1</span>
             </div>
           </Tooltip>
 
-          <Tooltip title="Phù hợp đăng YouTube chuẩn, Video Facebook (ngang), TV, Màn hình máy tính." arrow placement="top">
+          <Tooltip title="Phù hợp đăng YouTube chuẩn, TV." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '16:9' ? 'active' : ''}`} onClick={() => setAspectRatio('16:9')}>
               <div className="aspect-box-icon" style={{ width: 22, height: 14 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>16:9</span>
             </div>
           </Tooltip>
 
-          <Tooltip title="Phù hợp đăng TikTok, Facebook Story, Instagram Story/Reels." arrow placement="top">
+          <Tooltip title="Phù hợp TikTok, Story." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '9:16' ? 'active' : ''}`} onClick={() => setAspectRatio('9:16')}>
               <div className="aspect-box-icon" style={{ width: 14, height: 22 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>9:16</span>
@@ -682,79 +703,175 @@ export default function VideoCreatePage() {
         )}
       </AnimatePresence>
 
-      {/* MODAL 3: LIGHTBOX (ĐÃ ĐỔI NHÃN THÀNH "DÙNG LẠI PROMPT NÀY") */}
+      {/* ✅ MODAL LIGHTBOX CẢI TIẾN DÙNG CHUNG THEO CHUẨN COMMUNITY DÀNH CHO VIDEO */}
       <AnimatePresence>
         {activeVideoDetail && (
-          <div className="modal-overlay-backdrop" onClick={() => setActiveVideoDetail(null)}>
+          <div
+            className="community-modal-backdrop"
+            onClick={() => setActiveVideoDetail(null)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              className="lightbox-modal-card"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.25 }}
+              className="community-modal-card"
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="lightbox-close-btn" onClick={() => setActiveVideoDetail(null)}>
+              {/* Nút CLOSE 'X' Cố định */}
+              <button
+                className="modal-close-btn-fixed"
+                onClick={() => setActiveVideoDetail(null)}
+              >
                 <CloseOutlined fontSize="small" />
               </button>
 
-              <div className="lightbox-left-media">
+              {/* Cột Trái: Media chính */}
+              <div className="modal-left-media-wrapper">
                 <img
                   src={activeVideoDetail.imageUrl}
                   alt={activeVideoDetail.title}
-                  className="lightbox-full-img"
+                  className="modal-media-img"
                 />
+                <span className="modal-badge-4k">4K ULTRA HD</span>
+
+                {/* Nút Xem Toàn Video/Ảnh */}
+                <button
+                  className="btn-full-view-media"
+                  onClick={() => setIsFullViewMedia(true)}
+                >
+                  <FullscreenOutlined style={{ fontSize: 16 }} />
+                  Xem toàn video
+                </button>
               </div>
 
-              <div className="lightbox-right-info">
+              {/* Cột Phải: Thông tin & Prompt */}
+              <div className="modal-right-info-panel">
                 <div>
-                  <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#FFF', margin: 0 }}>
-                    {activeVideoDetail.title}
-                  </h2>
-                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '4px' }}>
-                    Tác giả: <span style={{ color: '#00F2FF' }}>@AuraNexus</span>
+                  <div className="modal-right-header" style={{ paddingRight: 36 }}>
+                    <h2 className="modal-item-title">{activeVideoDetail.title}</h2>
                   </div>
 
-                  <div style={{ fontSize: '11px', color: '#00F2FF', fontWeight: 700, letterSpacing: '0.8px', marginTop: '20px', textTransform: 'uppercase' }}>
-                    Lời gợi ý tạo nội dung
+                  {/* Khung Prompt */}
+                  <div className="modal-prompt-box-container">
+                    <div className="prompt-box-header">
+                      <span>PROMPT</span>
+                      <button
+                        style={{ background: 'transparent', border: 'none', color: '#06A8D9', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                        onClick={() => handleCopyPrompt(activeVideoDetail.prompt || '')}
+                      >
+                        <ContentCopyOutlined style={{ fontSize: 12 }} />
+                        {copied ? 'Đã chép!' : 'Sao chép'}
+                      </button>
+                    </div>
+                    <p className="prompt-text-content">"{activeVideoDetail.prompt || 'Mô tả chi tiết tác phẩm...'}"</p>
                   </div>
 
-                  <div className="lightbox-prompt-box">
-                    "{activeVideoDetail.prompt || 'Cảnh quay quận phố neon mưa rơi ban đêm...'}"
-                  </div>
+                  {/* Khung Tham Chiếu */}
+                  {activeVideoDetail.refFileName && (
+                    <div style={{ marginTop: 14 }}>
+                      <div style={{ fontSize: '10px', fontWeight: 700, color: '#64748B', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
+                        TỆP THAM CHIẾU (MEDIA REF)
+                      </div>
+                      <div
+                        className="image-ref-card-figma"
+                        onClick={() => setPreviewRefImage(activeVideoDetail.refUrl || activeVideoDetail.imageUrl)}
+                      >
+                        <div className="ref-thumb-box">
+                          <img src={activeVideoDetail.refUrl || activeVideoDetail.imageUrl} alt="Ref Thumb" className="ref-thumb-img" />
+                        </div>
+                        <div className="ref-info-text">
+                          <div className="ref-filename-title">{activeVideoDetail.refFileName}</div>
+                          <div className="ref-filesize-sub">{activeVideoDetail.refSize || '1.1 MB • Config Data'}</div>
+                        </div>
+                        <IconButton size="small" sx={{ color: '#06A8D9' }}>
+                          <DownloadOutlined fontSize="small" />
+                        </IconButton>
+                      </div>
+                    </div>
+                  )}
 
-                  <div className="lightbox-metadata-grid">
-                    <div className="metadata-item">
-                      <div className="metadata-label">Mẫu</div>
-                      <div className="metadata-value">{activeVideoDetail.model}</div>
+                  {/* 4 Thẻ Metadata dành riêng cho Video */}
+                  <div className="modal-metadata-grid-2x2">
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">MẪU</div>
+                      <div className="meta-info-value">{activeVideoDetail.model}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Hạt giống</div>
-                      <div className="metadata-value">{activeVideoDetail.seed || '88294105'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">TỶ LỆ</div>
+                      <div className="meta-info-value">{activeVideoDetail.aspectRatio || '16:9'}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Thang đo chuyển động</div>
-                      <div className="metadata-value">{activeVideoDetail.motionScale || '8.5 / 10'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">CHẤT LƯỢNG</div>
+                      <div className="meta-info-value">{activeVideoDetail.quality || '1080P 60fps'}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Tỷ lệ khung hình</div>
-                      <div className="metadata-value">{activeVideoDetail.aspectRatio || '16:9'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">THỜI LƯỢNG</div>
+                      <div className="meta-info-value">{activeVideoDetail.duration || '00:15s'}</div>
                     </div>
                   </div>
                 </div>
 
-                {/* ĐẢM BẢO ĐỔI TÊN NÚT THÀNH "DÙNG LẠI PROMPT NÀY" */}
-                <button
-                  className="btn-remix-cyan"
-                  onClick={() => {
-                    setPromptDraft(activeVideoDetail.prompt || '')
-                    setActiveVideoDetail(null)
-                  }}
-                >
-                  <AutoFixHighOutlined fontSize="small" />
-                  Dùng lại prompt này
-                </button>
+                {/* Stack Nút Thao Tác */}
+                <div className="modal-actions-stack">
+                  <button
+                    className="btn-remix-orange"
+                    onClick={() => {
+                      setPromptDraft(activeVideoDetail.prompt || '')
+                      setActiveVideoDetail(null)
+                    }}
+                  >
+                    <AutoFixHighOutlined style={{ fontSize: 16 }} />
+                    Dùng lại prompt & Ảnh gốc
+                  </button>
+
+                  <button
+                    className="btn-download-cyan"
+                    onClick={() => alert(`Đang tải video 4K: ${activeVideoDetail.title}`)}
+                  >
+                    <DownloadOutlined style={{ fontSize: 16 }} />
+                    Tải về 4K
+                  </button>
+                </div>
               </div>
             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL FULLSCREEN PREVIEW */}
+      <AnimatePresence>
+        {(isFullViewMedia || previewRefImage) && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.95)',
+              zIndex: 3000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px',
+            }}
+            onClick={() => {
+              setIsFullViewMedia(false)
+              setPreviewRefImage(null)
+            }}
+          >
+            <IconButton
+              style={{ position: 'absolute', top: 20, right: 20, color: '#FFF', background: 'rgba(255,255,255,0.1)' }}
+              onClick={() => {
+                setIsFullViewMedia(false)
+                setPreviewRefImage(null)
+              }}
+            >
+              <CloseOutlined />
+            </IconButton>
+            <img
+              src={previewRefImage || activeVideoDetail?.imageUrl}
+              alt="Full Preview"
+              style={{ maxWidth: '95vw', maxHeight: '95vh', objectFit: 'contain', borderRadius: '12px' }}
+            />
           </div>
         )}
       </AnimatePresence>

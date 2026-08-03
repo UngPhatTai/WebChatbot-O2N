@@ -7,6 +7,8 @@ import ImageCreatePage from './pages/ImageCreatePage'
 import MeetingGuidePage from './pages/MeetingGuidePage' // ✅ Import trang mới
 import SettingsPage from './pages/SettingsPage' // Import trang mới
 import LibraryPage from './pages/LibraryPage' // ✅ Import trang Kho lưu trữ mới
+import AIPersonaPage from './pages/AIPersonaPage' // ✅ Import trang Cá nhân hóa mới
+import CommunityPage from './pages/CommunityPage' // ✅ Import trang Cộng đồng mới
 
 function PageFrame({ title }) {
   return (
@@ -37,6 +39,8 @@ function App() {
           <Route path="/guide" element={<MeetingGuidePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/library" element={<LibraryPage />} />
+          <Route path="/persona" element={<AIPersonaPage />} />
+          <Route path="/community" element={<CommunityPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

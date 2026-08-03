@@ -12,7 +12,9 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* WATERMARK LOGO CỐ ĐỊNH CHÍNH GIỮA KHU VỰC MEETINGGUIDEPAGE */
+/* ========================================================================= */
+/* WATERMARK LOGO CHÌM TRANG GHI ÂM CUỘC HỌP                                 */
+/* ========================================================================= */
 .watermark-bg-logo {
   position: fixed;
   top: 50%;
@@ -21,11 +23,20 @@
   width: 480px;
   height: 480px;
   object-fit: contain;
-  opacity: 0.08;
+  opacity: 0.1 !important; /* Mức Opacity chuẩn 0.3 */
   pointer-events: none;
   z-index: 0;
-  filter: drop-shadow(0 0 35px rgba(0, 242, 255, 0.25));
+  filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.45)) drop-shadow(0 0 50px rgba(0, 242, 255, 0.25));
   user-select: none;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  .watermark-bg-logo {
+    left: 50% !important;
+    width: 380px;
+    height: 380px;
+  }
 }
 
 /* Custom Scrollbar Mờ Dịu */

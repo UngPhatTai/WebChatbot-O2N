@@ -13,20 +13,41 @@
   scroll-behavior: smooth;
 }
 
-/* WATERMARK LOGO CỐ ĐỊNH CHÍNH GIỮA CANVAS */
+/* ========================================================================= */
+/* WATERMARK LOGO CHÌM CỐ ĐỊNH CHÍNH GIỮA CANVAS TRANG SETTING               */
+/* ========================================================================= */
 .settings-watermark-bg {
   position: fixed;
   top: 50%;
-  left: calc(260px + (100vw - 260px) / 2);
+  left: calc(260px + (100vw - 260px) / 2); /* Căn giữa vùng làm việc trên PC (trừ Sidebar 260px) */
   transform: translate(-50%, -50%);
   width: 520px;
   height: 520px;
   object-fit: contain;
-  opacity: 0.07;
+  opacity: 0.1 !important; /* Mức Opacity chuẩn 0.3 theo yêu cầu */
   pointer-events: none;
   z-index: 0;
-  filter: drop-shadow(0 0 40px rgba(0, 242, 255, 0.25));
+  /* Hiệu ứng Glow Cyan phát sáng nhẹ dịu mắt */
+  filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.45)) drop-shadow(0 0 50px rgba(0, 242, 255, 0.25));
   user-select: none;
+  transition: left 0.3s ease, width 0.3s ease, opacity 0.3s ease;
+}
+
+/* RESPONSIVE TABLET & MOBILE FOR SETTINGS LOGO */
+@media (max-width: 900px) {
+  .settings-watermark-bg {
+    left: 50% !important; /* Căn giữa 100% màn hình khi ẩn Sidebar PC */
+    width: 380px;
+    height: 380px;
+    opacity: 0.1 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-watermark-bg {
+    width: 280px;
+    height: 280px;
+  }
 }
 
 /* Custom Scrollbar */

@@ -1,0 +1,419 @@
+/* ========================================================================= */
+/* MAIN CONTAINER & WORKSPACE                                                */
+/* ========================================================================= */
+.persona-page-container {
+  width: 100%;
+  height: 100vh;
+  background: #070A0D;
+  color: #E2E8F0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Mờ Dịu Cyber */
+.persona-page-container::-webkit-scrollbar {
+  width: 6px;
+}
+.persona-page-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.persona-page-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.persona-page-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 242, 255, 0.4);
+}
+
+/* ========================================================================= */
+/* WATERMARK LOGO CHÌM CỐ ĐỊNH CHÍNH GIỮA (RESPONSIVE CHUẨN 3 THIẾT BỊ)       */
+/* ========================================================================= */
+.persona-watermark-bg {
+  position: fixed;
+  top: 50%;
+  left: calc(260px + (100vw - 260px) / 2); /* Tự tính vị trí giữa tâm khung nhìn loại trừ Sidebar */
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
+  opacity: 0.3; /* Độ mờ vừa phải không gây nhức mắt */
+  pointer-events: none; /* Khóa tương tác để không cản trở cuộn hay chọn chữ */
+  z-index: 0;
+  filter: drop-shadow(0 0 40px rgba(0, 242, 255, 0.2));
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.persona-content-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 28px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ========================================================================= */
+/* HEADER WORKSPACE                                                          */
+/* ========================================================================= */
+.persona-header-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.4px;
+  background: linear-gradient(90deg, #FFFFFF 0%, #00F2FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.persona-header-subtitle {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #8E9BAE;
+  margin: 0;
+  max-width: 720px;
+}
+
+/* ========================================================================= */
+/* PERSONA CARD CONTAINERS                                                   */
+/* ========================================================================= */
+.persona-card {
+  background: rgba(18, 25, 33, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  transition: border-color 0.25s ease;
+}
+
+.persona-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.card-badge-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-badge-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-badge-box.cyan {
+  background: rgba(0, 242, 255, 0.1);
+  color: #00F2FF;
+  border: 1px solid rgba(0, 242, 255, 0.25);
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.2);
+}
+
+.icon-badge-box.orange {
+  background: rgba(245, 127, 31, 0.12);
+  color: #F57F1F;
+  border: 1px solid rgba(245, 127, 31, 0.3);
+  box-shadow: 0 0 12px rgba(245, 127, 31, 0.2);
+}
+
+.card-title-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+/* ========================================================================= */
+/* FORM FIELDS & INPUTS                                                      */
+/* ========================================================================= */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.field-input-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #FFFFFF;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.field-input-box:focus {
+  border-color: rgba(0, 242, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 16px rgba(0, 242, 255, 0.12);
+}
+
+/* TEXTAREA KHÔNG BỊ ĐÈ MẤT CHỮ */
+.field-textarea-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  color: #E2E8F0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  outline: none;
+  resize: vertical;
+  min-height: 140px;
+  width: 100%;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+.field-textarea-box:focus {
+  border-color: rgba(0, 242, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 16px rgba(0, 242, 255, 0.12);
+}
+
+.textarea-action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* NÚT TỐI ƯU TÓM TẮT KIẾN THỨC (CAM ORANGE GLOW) */
+.btn-magic-optimize {
+  background: rgba(245, 127, 31, 0.12);
+  border: 1px solid rgba(245, 127, 31, 0.4);
+  color: #F57F1F;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+}
+
+.btn-magic-optimize:hover {
+  background: #F57F1F;
+  color: #000000;
+  border-color: #F57F1F;
+  box-shadow: 0 0 16px rgba(245, 127, 31, 0.5);
+}
+
+/* ========================================================================= */
+/* KNOWLEDGE BASE DRAG & DROP ZONE                                           */
+/* ========================================================================= */
+.dropzone-container {
+  border: 1.5px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 32px 20px;
+  background: rgba(255, 255, 255, 0.01);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.dropzone-container:hover,
+.dropzone-container.is-dragover {
+  border-color: #00F2FF;
+  background: rgba(0, 242, 255, 0.03);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.1) inset;
+}
+
+.dropzone-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: #8E9BAE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.dropzone-container:hover .dropzone-icon-circle {
+  background: rgba(0, 242, 255, 0.15);
+  color: #00F2FF;
+  transform: scale(1.1);
+}
+
+.dropzone-text-main {
+  font-size: 13.5px;
+  color: #CBD5E1;
+  font-weight: 500;
+}
+
+.dropzone-highlight-orange {
+  color: #F57F1F;
+  font-weight: 700;
+}
+
+.dropzone-text-sub {
+  font-size: 11px;
+  color: #64748B;
+}
+
+/* ATTACHED FILE TAG BADGES */
+.attached-files-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.file-tag-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #E2E8F0;
+  transition: all 0.2s ease;
+}
+
+.file-tag-badge:hover {
+  border-color: rgba(0, 242, 255, 0.3);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.file-tag-icon {
+  color: #F57F1F;
+  font-size: 16px !important;
+}
+
+.btn-remove-file {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.btn-remove-file:hover {
+  color: #EF4444;
+}
+
+/* SAVE BUTTON BAR */
+.persona-save-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn-save-persona {
+  background: #00F2FF !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  padding: 12px 32px !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.35) !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-save-persona:hover {
+  background: #33F5FF !important;
+  box-shadow: 0 0 28px rgba(0, 242, 255, 0.55) !important;
+  transform: translateY(-2px);
+}
+
+/* ========================================================================= */
+/* RESPONSIVE MEDIA QUERIES (3 NỀN TẢNG: DESKTOP, TABLET, MOBILE)            */
+/* ========================================================================= */
+
+/* TABLET (< 900PX) */
+@media (max-width: 900px) {
+  .persona-watermark-bg {
+    left: 50%; /* Căn giữa viewport khi Sidebar thu gọn dạng Mobile Topbar */
+    width: 380px;
+    height: 380px;
+  }
+
+  .persona-content-wrapper {
+    padding: 24px 20px 80px;
+    gap: 24px;
+  }
+
+  .persona-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+}
+
+/* MOBILE (< 600PX) */
+@media (max-width: 600px) {
+  .persona-watermark-bg {
+    width: 280px;
+    height: 280px;
+    opacity: 0.3;
+  }
+
+  .persona-header-title {
+    font-size: 22px;
+  }
+
+  .persona-header-subtitle {
+    font-size: 12.5px;
+  }
+
+  .persona-content-wrapper {
+    padding: 16px 14px 80px;
+    gap: 18px;
+  }
+
+  .persona-card {
+    padding: 18px 14px;
+  }
+
+  .btn-save-persona {
+    width: 100% !important;
+  }
+
+  .textarea-action-row {
+    justify-content: center;
+  }
+
+  .btn-magic-optimize {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -23,10 +23,14 @@ import {
   NotInterestedOutlined,
   DiamondOutlined,
   AddOutlined,
+  DownloadOutlined,
+  ContentCopyOutlined,
+  FullscreenOutlined,
 } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 
 import '../css/ImageCreatePage.css'
+import '../css/CommunityPage.css' // Import CSS dùng chung Modal Lightbox
 
 const IMAGE_MODELS = [
   {
@@ -93,35 +97,41 @@ const INITIAL_IMAGES = [
   },
   {
     id: 'img-2',
-    title: 'Chim ruồi Cyber-Iris',
+    title: 'Phượng Hoàng Tơ Lụa',
     status: 'completed',
-    quality: 'HD ULTRA',
-    date: 'Ngày 24 tháng 10 năm 2026',
+    quality: '8K UHD',
+    style: 'Neon Cyber Lụa',
+    date: '20 Th10, 2026',
     model: 'Banana Flux.1 Ultra',
-    imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
-    prompt: 'Cảnh quay cận cảnh một con chim ruồi robot với đôi cánh bằng thủy tinh trong mờ, đang hút năng lượng sống từ một cụm hoa phát quang sinh học rực rỡ.',
-    seed: '88294105',
+    imageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+    prompt: 'Biểu tượng phượng hoàng lửa được dệt từ những sợi tơ lụa phát sáng truyền thống Việt Nam, render Octane Engine 8K.',
+    refFileName: 'phoenix_texture.png',
+    refSize: '3.8 MB • Texture Map',
+    refUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=300',
+    seed: '10928374',
     aspectRatio: '16:9',
-    author: '@AuraNexus',
   },
   {
     id: 'img-3',
     title: 'Thành phố Cyberpunk Ban Đêm',
     status: 'completed',
-    quality: 'HD ULTRA',
-    date: 'Ngày 23 tháng 10 năm 2026',
+    quality: '4K Ultra HD',
+    style: 'Futuristic',
+    date: '23 Th10, 2026',
     model: 'Midjourney V6.1',
     imageUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=800&auto=format&fit=crop',
     prompt: 'Góc quay toàn cảnh thành phố tương lai rực rỡ đèn neon dưới mưa, xe bay lưu thông mượt mà.',
+    refFileName: 'halong_blueprint.png',
+    refSize: '4.2 MB • Base Reference',
+    refUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=300',
     seed: '94201823',
     aspectRatio: '16:9',
-    author: '@UngPhatTai',
   },
 ]
 
 export default function ImageCreatePage() {
   const theme = useTheme()
-  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down('md')) // < 900px
+  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [userBalance, setUserBalance] = useState(1250)
   const [selectedModel, setSelectedModel] = useState(IMAGE_MODELS[0])
@@ -141,7 +151,12 @@ export default function ImageCreatePage() {
   const [isModelModalOpen, setIsModelModalOpen] = useState(false)
   const [isStyleModalOpen, setIsStyleModalOpen] = useState(false)
   const [styleActiveTab, setStyleActiveTab] = useState('color')
+  
+  // Modals & Lightbox States
   const [activeImageDetail, setActiveImageDetail] = useState(null)
+  const [previewRefImage, setPreviewRefImage] = useState(null)
+  const [isFullViewMedia, setIsFullViewMedia] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const [isMobileToolsOpen, setIsMobileToolsOpen] = useState(false)
 
@@ -203,6 +218,12 @@ export default function ImageCreatePage() {
     setAtmosphere({ label: 'Mặc định', img: '' })
     setLighting({ label: 'Mặc định', img: '' })
     setColorStyle({ label: 'Mặc định', img: '' })
+  }
+
+  const handleCopyPrompt = (text) => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const renderControlSidebarContent = () => (
@@ -321,21 +342,21 @@ export default function ImageCreatePage() {
       <div>
         <div className="control-group-title">KÍCH THƯỚC</div>
         <div className="aspect-ratio-grid">
-          <Tooltip title="Phù hợp đăng bài Facebook, Instagram Post, Ảnh đại diện, Ảnh sản phẩm Shopee/Lazada." arrow placement="top">
+          <Tooltip title="Phù hợp đăng bài Facebook, Instagram Post." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '1:1' ? 'active' : ''}`} onClick={() => setAspectRatio('1:1')}>
               <div className="aspect-box-icon" style={{ width: 16, height: 16 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>1:1</span>
             </div>
           </Tooltip>
 
-          <Tooltip title="Phù hợp làm Ảnh bìa (Cover), Thumbnail YouTube, Banner website, Presentation (Slide)." arrow placement="top">
+          <Tooltip title="Phù hợp làm Banner, YouTube Thumbnail." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '16:9' ? 'active' : ''}`} onClick={() => setAspectRatio('16:9')}>
               <div className="aspect-box-icon" style={{ width: 22, height: 14 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>16:9</span>
             </div>
           </Tooltip>
 
-          <Tooltip title="Phù hợp đăng TikTok, Facebook Story, Instagram Story/Reels." arrow placement="top">
+          <Tooltip title="Phù hợp đăng TikTok, Story." arrow placement="top">
             <div className={`aspect-btn ${aspectRatio === '9:16' ? 'active' : ''}`} onClick={() => setAspectRatio('9:16')}>
               <div className="aspect-box-icon" style={{ width: 14, height: 22 }}></div>
               <span style={{ fontSize: '11px', fontWeight: 600 }}>9:16</span>
@@ -669,79 +690,175 @@ export default function ImageCreatePage() {
         )}
       </AnimatePresence>
 
-      {/* MODAL 3: LIGHTBOX (ĐÃ ĐỔI NHÃN THÀNH "DÙNG LẠI PROMPT NÀY") */}
+      {/* ✅ MODAL LIGHTBOX CẢI TIẾN DÙNG CHUNG THEO CHUẨN COMMUNITY (LOẠI BỎ THẢ TIM, TÁC GIẢ & SỐ LƯỢNG TẢI) */}
       <AnimatePresence>
         {activeImageDetail && (
-          <div className="modal-overlay-backdrop" onClick={() => setActiveImageDetail(null)}>
+          <div
+            className="community-modal-backdrop"
+            onClick={() => setActiveImageDetail(null)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              className="lightbox-modal-card"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.25 }}
+              className="community-modal-card"
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="lightbox-close-btn" onClick={() => setActiveImageDetail(null)}>
+              {/* Nút CLOSE 'X' Cố định */}
+              <button
+                className="modal-close-btn-fixed"
+                onClick={() => setActiveImageDetail(null)}
+              >
                 <CloseOutlined fontSize="small" />
               </button>
 
-              <div className="lightbox-left-media">
+              {/* Cột Trái: Media chính */}
+              <div className="modal-left-media-wrapper">
                 <img
                   src={activeImageDetail.imageUrl}
                   alt={activeImageDetail.title}
-                  className="lightbox-full-img"
+                  className="modal-media-img"
                 />
+                <span className="modal-badge-4k">4K ULTRA HD</span>
+
+                {/* Nút Xem Toàn Ảnh */}
+                <button
+                  className="btn-full-view-media"
+                  onClick={() => setIsFullViewMedia(true)}
+                >
+                  <FullscreenOutlined style={{ fontSize: 16 }} />
+                  Xem toàn ảnh
+                </button>
               </div>
 
-              <div className="lightbox-right-info">
+              {/* Cột Phải: Thông tin & Prompt */}
+              <div className="modal-right-info-panel">
                 <div>
-                  <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#FFF', margin: 0 }}>
-                    {activeImageDetail.title}
-                  </h2>
-                  <div style={{ fontSize: '12px', color: '#64748B', marginTop: '4px' }}>
-                    Tác giả: <span style={{ color: '#00F2FF' }}>{activeImageDetail.author || '@AuraNexus'}</span>
+                  <div className="modal-right-header" style={{ paddingRight: 36 }}>
+                    <h2 className="modal-item-title">{activeImageDetail.title}</h2>
                   </div>
 
-                  <div style={{ fontSize: '11px', color: '#00F2FF', fontWeight: 700, letterSpacing: '0.8px', marginTop: '20px', textTransform: 'uppercase' }}>
-                    Lời gợi ý tạo nội dung
+                  {/* Khung Prompt */}
+                  <div className="modal-prompt-box-container">
+                    <div className="prompt-box-header">
+                      <span>PROMPT</span>
+                      <button
+                        style={{ background: 'transparent', border: 'none', color: '#06A8D9', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                        onClick={() => handleCopyPrompt(activeImageDetail.prompt)}
+                      >
+                        <ContentCopyOutlined style={{ fontSize: 12 }} />
+                        {copied ? 'Đã chép!' : 'Sao chép'}
+                      </button>
+                    </div>
+                    <p className="prompt-text-content">"{activeImageDetail.prompt}"</p>
                   </div>
 
-                  <div className="lightbox-prompt-box">
-                    "{activeImageDetail.prompt || 'Mô tả chi tiết tác phẩm...'}"
-                  </div>
+                  {/* Ảnh Tham Chiếu (Image Ref) */}
+                  {activeImageDetail.refFileName && (
+                    <div style={{ marginTop: 14 }}>
+                      <div style={{ fontSize: '10px', fontWeight: 700, color: '#64748B', letterSpacing: '0.8px', textTransform: 'uppercase' }}>
+                        ẢNH THAM CHIẾU (IMAGE REF)
+                      </div>
+                      <div
+                        className="image-ref-card-figma"
+                        onClick={() => setPreviewRefImage(activeImageDetail.refUrl || activeImageDetail.imageUrl)}
+                      >
+                        <div className="ref-thumb-box">
+                          <img src={activeImageDetail.refUrl || activeImageDetail.imageUrl} alt="Ref Thumb" className="ref-thumb-img" />
+                        </div>
+                        <div className="ref-info-text">
+                          <div className="ref-filename-title">{activeImageDetail.refFileName}</div>
+                          <div className="ref-filesize-sub">{activeImageDetail.refSize || '3.8 MB • Texture Map'}</div>
+                        </div>
+                        <IconButton size="small" sx={{ color: '#06A8D9' }}>
+                          <DownloadOutlined fontSize="small" />
+                        </IconButton>
+                      </div>
+                    </div>
+                  )}
 
-                  <div className="lightbox-metadata-grid">
-                    <div className="metadata-item">
-                      <div className="metadata-label">Mẫu</div>
-                      <div className="metadata-value">{activeImageDetail.model}</div>
+                  {/* 4 Thẻ Metadata dành riêng cho Ảnh */}
+                  <div className="modal-metadata-grid-2x2">
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">MẪU</div>
+                      <div className="meta-info-value">{activeImageDetail.model}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Hạt giống</div>
-                      <div className="metadata-value">{activeImageDetail.seed || '88294105'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">TỶ LỆ</div>
+                      <div className="meta-info-value">{activeImageDetail.aspectRatio}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Chất lượng</div>
-                      <div className="metadata-value">{activeImageDetail.quality || 'HD ULTRA'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">CHẤT LƯỢNG</div>
+                      <div className="meta-info-value">{activeImageDetail.quality || '8K UHD'}</div>
                     </div>
-                    <div className="metadata-item">
-                      <div className="metadata-label">Tỷ lệ khung hình</div>
-                      <div className="metadata-value">{activeImageDetail.aspectRatio || '16:9'}</div>
+                    <div className="meta-info-card">
+                      <div className="meta-info-label">PHONG CÁCH</div>
+                      <div className="meta-info-value">{activeImageDetail.style || 'Cinematic'}</div>
                     </div>
                   </div>
                 </div>
 
-                {/* ĐẢM BẢO ĐỔI TÊN NÚT THÀNH "DÙNG LẠI PROMPT NÀY" */}
-                <button
-                  className="btn-remix-cyan"
-                  onClick={() => {
-                    setPromptDraft(activeImageDetail.prompt || '')
-                    setActiveImageDetail(null)
-                  }}
-                >
-                  <AutoFixHighOutlined fontSize="small" />
-                  Dùng lại prompt này
-                </button>
+                {/* Stack Nút Thao Tác */}
+                <div className="modal-actions-stack">
+                  <button
+                    className="btn-remix-orange"
+                    onClick={() => {
+                      setPromptDraft(activeImageDetail.prompt || '')
+                      setActiveImageDetail(null)
+                    }}
+                  >
+                    <AutoFixHighOutlined style={{ fontSize: 16 }} />
+                    Dùng lại prompt & Ảnh gốc
+                  </button>
+
+                  <button
+                    className="btn-download-cyan"
+                    onClick={() => alert(`Đang tải ảnh 4K: ${activeImageDetail.title}`)}
+                  >
+                    <DownloadOutlined style={{ fontSize: 16 }} />
+                    Tải về 4K
+                  </button>
+                </div>
               </div>
             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL FULLSCREEN PREVIEW */}
+      <AnimatePresence>
+        {(isFullViewMedia || previewRefImage) && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.95)',
+              zIndex: 3000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px',
+            }}
+            onClick={() => {
+              setIsFullViewMedia(false)
+              setPreviewRefImage(null)
+            }}
+          >
+            <IconButton
+              style={{ position: 'absolute', top: 20, right: 20, color: '#FFF', background: 'rgba(255,255,255,0.1)' }}
+              onClick={() => {
+                setIsFullViewMedia(false)
+                setPreviewRefImage(null)
+              }}
+            >
+              <CloseOutlined />
+            </IconButton>
+            <img
+              src={previewRefImage || activeImageDetail?.imageUrl}
+              alt="Full Preview"
+              style={{ maxWidth: '95vw', maxHeight: '95vh', objectFit: 'contain', borderRadius: '12px' }}
+            />
           </div>
         )}
       </AnimatePresence>

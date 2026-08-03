@@ -464,19 +464,29 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* WATERMARK LOGO LẮP ẨN DƯỚI KHUNG CHAT */
+/* ========================================================================= */
+/* WATERMARK LOGO CHÌM TRONG KHUNG CHATBOT                                    */
+/* ========================================================================= */
 .chat-watermark-logo {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: calc(50% - 160px); /* Căn giữa chính xác vùng chat chính (trừ 1/2 độ rộng Right Panel 320px) */
   transform: translate(-50%, -50%);
   width: 420px;
   height: 420px;
   object-fit: contain;
-  opacity: 0.035;
+  opacity: 0.08 !important; /* Opacity 0.3 */
   pointer-events: none;
   z-index: 0;
-  filter: grayscale(30%) blur(1px);
+  filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.45)) drop-shadow(0 0 50px rgba(0, 242, 255, 0.25));
+}
+
+@media (max-width: 900px) {
+  .chat-watermark-logo {
+    left: 50% !important; /* Căn giữa tâm màn hình Mobile */
+    width: 300px;
+    height: 300px;
+  }
 }
 
 /* AI IMAGE GENERATION BUBBLE */

@@ -6,10 +6,11 @@ import {
   ImageOutlined,
   VideocamOutlined,
   MicNoneOutlined,
+  PeopleOutlineRounded, // ✅ Icon Cộng đồng mới
   SettingsOutlined,
   MenuOpenRounded,
   MenuRounded,
-  FolderZipOutlined, // ✅ Đã bổ sung import icon còn thiếu
+  FolderZipOutlined,
 } from '@mui/icons-material'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -22,7 +23,8 @@ const mainNavItems = [
   { label: 'Tạo ảnh', path: '/image', icon: ImageOutlined },
   { label: 'Tạo video', path: '/video', icon: VideocamOutlined },
   { label: 'Ghi âm cuộc họp', path: '/guide', icon: MicNoneOutlined },
-  { label: 'Kho lưu trữ', path: '/library', icon: FolderZipOutlined }, // ✅ Sử dụng icon Kho lưu trữ
+  { label: 'Kho lưu trữ', path: '/library', icon: FolderZipOutlined },
+  { label: 'Cộng đồng', path: '/community', icon: PeopleOutlineRounded }, // ✅ Mục Cộng đồng mới
 ]
 
 const bottomNavItems = [
@@ -44,6 +46,8 @@ export default function Sidebar({
       onCloseMobileDrawer()
     }
   }
+
+  const isPersonaActive = location.pathname === '/persona'
 
   const renderNavItem = (item) => {
     const Icon = item.icon
@@ -87,7 +91,6 @@ export default function Sidebar({
         isMobileDrawer ? 'mobile-drawer' : 'desktop-sidebar'
       }`}
     >
-      {/* Upper Group: Logo Header & Toggle Button */}
       <div>
         <div className="sidebar-brand-header">
           <motion.div
@@ -140,25 +143,30 @@ export default function Sidebar({
           )}
         </div>
 
-        {/* Main Navigation */}
         <nav className="nav-list">{mainNavItems.map(renderNavItem)}</nav>
       </div>
 
-      {/* Bottom Group: Settings & Profile */}
       <div>
         <nav className="nav-list" style={{ marginBottom: '16px' }}>
           {bottomNavItems.map(renderNavItem)}
         </nav>
 
-        {/* User Profile Card */}
         {isCollapsed && !isMobileDrawer ? (
-          <Tooltip title="Ung Phát Tài (Pro Plan)" placement="right" arrow>
-            <div className="user-profile-card">
+          <Tooltip title="Cá nhân hóa Trợ lý AI (Ung Phát Tài)" placement="right" arrow>
+            <div
+              className={`user-profile-card ${isPersonaActive ? 'active-persona' : ''}`}
+              onClick={() => handleNavClick('/persona')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={defaultAvatar} alt="Ung Phát Tài" className="user-avatar" />
             </div>
           </Tooltip>
         ) : (
-          <div className="user-profile-card">
+          <div
+            className={`user-profile-card ${isPersonaActive ? 'active-persona' : ''}`}
+            onClick={() => handleNavClick('/persona')}
+            style={{ cursor: 'pointer' }}
+          >
             <img src={defaultAvatar} alt="Ung Phát Tài" className="user-avatar" />
             <div className="user-info">
               <div className="user-name">Ung Phát Tài</div>
